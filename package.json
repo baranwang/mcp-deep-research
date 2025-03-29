@@ -25,7 +25,11 @@
     "type": "git",
     "url": "https://github.com/baranwang/mcp-deep-research.git"
   },
+  "bugs": {
+    "url": "https://github.com/baranwang/mcp-deep-research/issues"
+  },
   "license": "MIT",
+  "author": "baranwang",
   "files": [
     "dist"
   ],
@@ -48,5 +52,6 @@
     "@rslib/core": "^0.6.0",
     "@types/node": "^22.8.1",
     "typescript": "^5.8.2"
-  }
+  },
+  "packageManager": "pnpm@9.12.1"
 }
