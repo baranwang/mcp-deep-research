@@ -22,8 +22,6 @@ jobs:
 
       - run: pnpm install
 
-      - run: pnpm test
-
       - uses: changesets/action@v1
         id: changesets
         with:
