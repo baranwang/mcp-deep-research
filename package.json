@@ -13,14 +13,7 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "keywords": [
-    "mcp",
-    "deep-research",
-    "tavily",
-    "search",
-    "research",
-    "mcp-tool"
-  ],
+  "keywords": ["mcp", "deep-research", "tavily", "search", "research", "mcp-tool"],
   "repository": {
     "type": "git",
     "url": "https://github.com/baranwang/mcp-deep-research.git"
@@ -30,14 +23,14 @@
   },
   "license": "MIT",
   "author": "baranwang",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "rslib build",
     "check": "biome check --write",
     "dev": "rslib build --watch",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "prerelease": "npm run build",
+    "release": "changeset publish"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
@@ -48,7 +41,6 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@changesets/cli": "^2.28.1",
-    "@modelcontextprotocol/inspector": "^0.7.0",
     "@rslib/core": "^0.6.0",
     "@types/node": "^22.8.1",
     "typescript": "^5.8.2"
