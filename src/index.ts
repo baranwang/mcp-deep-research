@@ -3,27 +3,9 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema, type ServerResult } from '@modelcontextprotocol/sdk/types.js';
+import { type TavilySearchOptions, tavily } from '@tavily/core';
 import { z } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
-
-// Type Definitions
-interface TavilySearchResult {
-  title: string;
-  url: string;
-  content: string;
-  score: number;
-}
-
-interface TavilySearchSuccessResponse {
-  query: string;
-  results: TavilySearchResult[];
-}
-
-interface TavilySearchErrorResponse {
-  detail: {
-    error: string;
-  };
-}
 
 // Utility Functions
 function safeParseInt(value: string | undefined, defaultValue: number): number {
@@ -40,32 +22,11 @@ const CONFIG = {
   PACKAGE_VERSION: process.env.PACKAGE_VERSION ?? '0.0.0',
 } as const;
 
-async function searchTavily(keyword: string, topic: string): Promise<string> {
-  const response = await fetch(CONFIG.TAVILY_API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${CONFIG.TAVILY_API_KEY}`,
-    },
-    body: JSON.stringify({
-      query: keyword,
-      search_depth: 'basic',
-      topic,
-    }),
-  });
-
-  if (response.status !== 200) {
-    const data = (await response.json()) as TavilySearchErrorResponse;
-    throw new Error(data?.detail?.error);
-  }
-
-  const data = (await response.json()) as TavilySearchSuccessResponse;
-  return formatSearchResults(data);
-}
-
-function formatSearchResults(data: TavilySearchSuccessResponse): string {
-  let result = `## Search Results for \`${data.query}\`\n`;
-  data.results.forEach((searchResult, index) => {
+async function searchTavily(keyword: string, options: TavilySearchOptions): Promise<string> {
+  const tvly = tavily({ apiKey: CONFIG.TAVILY_API_KEY });
+  const response = await tvly.search(keyword, options);
+  let result = `## Search Results for \`${response.query}\`\n`;
+  response.results.forEach((searchResult, index) => {
     result += `### Reference ${index + 1}:\n`;
     result += `Title: ${searchResult.title}\n`;
     result += `Content: ${searchResult.content}\n`;
@@ -153,7 +114,12 @@ async function deepResearch(args: unknown): Promise<ServerResult> {
   if (!CONFIG.TAVILY_API_KEY) {
     return {
       isError: true,
-      content: [{ type: 'text', text: 'Please configure the `TAVILY_API_KEY` environment variable' }],
+      content: [
+        {
+          type: 'text',
+          text: 'Please configure the `TAVILY_API_KEY` environment variable, get it from https://tavily.com/',
+        },
+      ],
     };
   }
 
@@ -161,7 +127,7 @@ async function deepResearch(args: unknown): Promise<ServerResult> {
 
   let searchResults = reference;
   if (keywords.length) {
-    const results = await Promise.allSettled(keywords.map((keyword) => searchTavily(keyword, topic)));
+    const results = await Promise.allSettled(keywords.map((keyword) => searchTavily(keyword, { topic })));
 
     searchResults += results
       .filter((result): result is PromiseFulfilledResult<string> => result.status === 'fulfilled')

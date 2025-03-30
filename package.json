@@ -13,7 +13,14 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "keywords": ["mcp", "deep-research", "tavily", "search", "research", "mcp-tool"],
+  "keywords": [
+    "mcp",
+    "deep-research",
+    "tavily",
+    "search",
+    "research",
+    "mcp-tool"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/baranwang/mcp-deep-research.git"
@@ -23,7 +30,9 @@
   },
   "license": "MIT",
   "author": "baranwang",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rslib build",
     "check": "biome check --write",
@@ -34,6 +43,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
+    "@tavily/core": "^0.3.4",
     "zod": "^3.24.2",
     "zod-to-json-schema": "^3.24.5",
     "zod-validation-error": "^3.4.0"
