@@ -64,7 +64,7 @@ async function searchTavily(keyword: string, topic: string): Promise<string> {
 }
 
 function formatSearchResults(data: TavilySearchSuccessResponse): string {
-  let result = `## ${data.query}\n`;
+  let result = `## Search Results for \`${data.query}\`\n`;
   data.results.forEach((searchResult, index) => {
     result += `### Reference ${index + 1}:\n`;
     result += `Title: ${searchResult.title}\n`;
@@ -81,15 +81,16 @@ You are a professional information search and analysis expert, specializing in:
 - Synthesizing and distilling information
 - Providing accurate and comprehensive answers
 
-# Background Information
-User Question: ${question}
+# User Question
+${question}
 
+# Current Environment
 Current Search Round: ${rounds}
 Maximum Search Rounds: ${CONFIG.MAX_PLANNING_ROUNDS}
 Current Time: ${new Date().toLocaleString()}
 
 # Known Information
-${searchResults}
+${searchResults ?? 'No reference information available'}
 
 # Analysis Steps
 1. Resource Sufficiency Assessment
@@ -140,7 +141,9 @@ const DeepResearchToolSchema = z.object({
     .min(0)
     .max(CONFIG.MAX_SEARCH_KEYWORDS)
     .optional()
-    .describe(`Search keywords, please provide 1~${CONFIG.MAX_SEARCH_KEYWORDS} keywords`),
+    .describe(
+      `Search keywords, please provide 1~${CONFIG.MAX_SEARCH_KEYWORDS} keywords. Each keyword must: include complete subject and predicate, avoid pronouns and references, have independent search value, avoid logical overlap between keywords, and be directly relevant to the question`,
+    ),
   topic: z.enum(['general', 'news', 'finance']).default('general').describe('Search topic'),
   rounds: z.number().default(1).describe('Current search round, defaults to 1'),
 });
@@ -194,7 +197,8 @@ async function main() {
     tools: [
       {
         name: 'deep-research',
-        description: 'Deep web information search tool that can conduct multi-round in-depth research based on keywords and topics',
+        description:
+          'Deep web information search tool that can conduct multi-round in-depth research based on keywords and topics',
         inputSchema: zodToJsonSchema(DeepResearchToolSchema),
       },
     ],
