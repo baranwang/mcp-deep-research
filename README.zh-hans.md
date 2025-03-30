@@ -33,6 +33,7 @@ MCP Deep Research 是一个用于网络信息搜索推理的工具。基于 [Mod
 - `TAVILY_API_KEY`：[Tavily](https://tavily.com/) API 的密钥
 - `MAX_SEARCH_KEYWORDS`：使用的最大搜索关键词数量
 - `MAX_PLANNING_ROUNDS`：使用的最大规划轮次数
+- `TAVILY_HTTP_PROXY`/`TAVILY_HTTPS_PROXY`：Tavily API 的代理地址
 
 ### 通过 Smithery 使用
 

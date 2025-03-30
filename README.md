@@ -33,6 +33,7 @@ The tool can be configured using the following environment variables:
 - `TAVILY_API_KEY`: The API key for the [Tavily](https://tavily.com/) API.
 - `MAX_SEARCH_KEYWORDS`: The maximum number of search keywords to use.
 - `MAX_PLANNING_ROUNDS`: The maximum number of planning rounds to use.
+- `TAVILY_HTTP_PROXY`/`TAVILY_HTTPS_PROXY`: The proxy address for the Tavily API.
 
 ### Use with Smithery
 
