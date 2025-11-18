@@ -10,6 +10,10 @@
 
 MCP Deep Research is a tool that allows you to search the web for information. It is built with the [Model Context Protocol](https://modelcontextprotocol.com/) and the [Tavily API](https://tavily.com/).
 
+<a href="https://glama.ai/mcp/servers/@baranwang/mcp-deep-research">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@baranwang/mcp-deep-research/badge" alt="Deep Research MCP server" />
+</a>
+
 ## Configuration
 
 ```jsonc
