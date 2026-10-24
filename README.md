@@ -1,6 +1,6 @@
 # MCP Deep Research
 
-[![smithery badge](https://smithery.ai/badge/@baranwang/mcp-deep-research)](https://smithery.ai/server/@baranwang/mcp-deep-research)
+[![LightNow capabilities](https://lightnow.ai/badge/io.github.baranwang/mcp-deep-research)](https://lightnow.ai/servers/io.github.baranwang/mcp-deep-research)
 [![NPM Version](https://img.shields.io/npm/v/mcp-deep-research)](https://www.npmjs.com/package/mcp-deep-research)
 ![NPM License](https://img.shields.io/npm/l/mcp-deep-research)
 
